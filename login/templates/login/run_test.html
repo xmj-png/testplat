@@ -1,0 +1,75 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- 上述meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/bootstrap-4.5.0-dist/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="{% static 'login/css/run_test.css' %}" />
+      <style>
+          #id_project li {
+              list-style: none;
+          }
+      </style>
+    <title>用例执行</title>
+  </head>
+  <body>
+    <div class="container" >
+            <div id='auto_test' class="col-md-8" style="margin:20px auto;" >
+                <form class="form-run_test" action="/run_test/" method="GET">
+                    {% if test_form.captcha.errors %}
+                        <div class="alert alert-warning">{{ test_form.captcha.errors}}</div>
+                    {% elif message %}
+                        <div class="alert alert-warning">{{ message }}</div>
+                    {% endif %}
+                  {% csrf_token %}
+{#                {{ request.session.user_name }}#}
+                    <h3 class="text-center" type='text/css' style="float: left">自动化用例执行</h3>
+                    <br><br>
+                    <div class="form-group">
+                      {{ test_form.test_type.label_tag}}
+                      {{ test_form.test_type}}
+                    </div>
+                    <div class="form-group">
+                      {{ test_form.envId.label_tag}}
+                      {{ test_form.envId}}
+                    </div>
+                    <div class="form-group" style="list-style-type:none;">
+                      {{ test_form.project.label_tag}}
+                      {{ test_form.project}}
+                    </div>
+                 <br>
+                  <div>
+                      <a href="/test_report_list10/" class="text-success " style="margin-left: 60px"><ins>查看测试报告</ins></a>
+                      <button id="button-run-test" type="submit" class="btn btn-primary float-xl-left">执行用例</button>&nbsp;&nbsp;
+                      <a href="/" class="text-success "><ins>返回首页</ins></a>
+                  </div>
+                </form>
+            </div>
+    </div> <!-- /container -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    {#    以下三者的引用顺序是固定的#}
+  <script src="/static/jquery-3.5.1/jquery-3.5.1.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="/static/bootstrap-4.5.0-dist/js/bootstrap.js"></script>
+
+  <script>
+      $(function () {
+            $('#id_envId').change(function () {
+                var v = $('#id_envId').val()
+             if(v==2) {
+               $($('#id_project').children()[0]).css('display', 'none')
+               $($('#id_project').children()[1]).css('display', 'none')
+            } else {
+              $($('#id_project').children()[0]).css('display', 'block')
+              $($('#id_project').children()[1]).css('display', 'block')
+            }
+            })
+      })
+  </script>
+  </body>
+</html>

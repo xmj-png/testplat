@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>懒人自动化测试平台</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- css -->
+
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/static/login/js/echarts.min.js"></script>
+    <link rel="icon" href="/static/favicon.ico">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+{#    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">#}
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <style>
+html,body{
+    width:100%;
+    height:100%;
+    margin:0px;
+}
+    #main{
+        width:100%;
+        height:100%;
+        display:flex;
+        flex-wrap: wrap;
+        flex-direction:row;
+        justify-content: start;
+
+    }
+    #navbar{
+            margin-bottom: 5px;
+            background-color: #0049B0;
+    }
+    .navbar-brand{
+            padding-top: 25px;
+            font-weight:bold;
+            color: white;
+            font-size: 20px;
+    }
+    .left-menu{
+        width:13%;
+        height: auto;
+        {#background:lightyellow;#}
+        margin-right: 0.5%;
+        border-radius:5px;
+        border-style:solid;
+        border-width:1px;
+        border-color:#3399FF;
+
+    }
+    .right-content{
+        width: 86.5%;
+        height:auto;
+        {#background:#bbe2d5;#}
+        border-radius:5px;
+        border-style:solid;
+        border-width:1px;
+        border-color:#3399FF;
+    }
+
+    li{
+        list-style:none;
+    }
+
+    a{
+        text-decoration: none;
+        color: black;
+    }
+    a:focus, a:hover {
+    color: #23527c;
+    text-decoration: none;
+    }
+    li:hover{
+        list-style:none;
+    }
+
+</style>
+</head>
+<body>
+<nav id='navbar' class="navbar navbar-expand-lg navbar-light bg-light" >
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <p class="navbar-brand">懒人自动化测试平台</p>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li style="text-align: right;padding-left: 50px;color: white;padding-top: 25px">Hello,{{ request.session.user_name }}欢迎回来！</li>
+        <li style="text-align: right;padding-left: 50px;color: white;padding-top: 25px;float: right" id="datetime" >
+            <script>
+                setInterval("document.getElementById('datetime').innerHTML=new Date().toLocaleString();", 1000);
+           </script></li>
+      </ul>
+{#      <form class="navbar-form navbar-right" style="margin-top: 16px">#}
+        <div class="form-group" style="float: right;" >
+          {% if request.session.is_login  ==  True %}
+                <li class="glyphicon glyphicon-log-out" style="color:white;padding-top: 25px;">
+                    <link style="size: B5;color: white"><a href="/logout/" style=";color: white"><strong>登出</strong></a></link>
+                </li>
+            {% else %}
+                <li class="glyphicon glyphicon-log-in" style="color:white;padding-top: 25px;">
+                    <link style="size: B5"><a href="/login/" style="color: white"><strong>登录</strong></a></link>
+                </li>
+            {% endif %}
+        </div>
+{#        <button type="submit"  class="btn btn-default">搜索</button>#}
+{#        </form>#}
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+{#        <div class="top-head">#}
+{#            <div id="logo"></div>#}
+{#            <div id="title" style="font-size: xx-large">懒人自动化测试平台</div>#}
+{#            <h4 style="text-align: right;padding-left: 30px;color: orangered;padding-top: 20px">Hello,{{ request.session.user_name }}欢迎回来！</h4>#}
+{#            <h5 style="text-align: left;padding-left: 10px;color: black;padding-top: 25px;float: right" id="datetime" >#}
+{#            <script>#}
+{#                setInterval("document.getElementById('datetime').innerHTML=new Date().toLocaleString();", 1000);#}
+{#            </script>#}
+{#            </h5>#}
+{#        </div>#}
+<div id="main">
+        <div class="left-menu">
+             <!-- 侧边栏标签页 -->
+        <ul class="nav nav-stacked">
+            <!-- 侧边栏选项 -->
+            <li role="presentation" class="active " id="data_create">
+                <!-- 选项控制data-target对应的显隐 -->
+                <a href="#" data-toggle="collapse" data-target="#list1"><strong>数据构造</strong></a>
+                <!-- 隐藏的详细菜单 -->
+                <ul id="list1" class="collapse">
+                    <li class="active glyphicon glyphicon-tags">
+                        <a href="/send_code/">
+                            听读券赠送
+                        </a>
+                    </li>
+                    <br>
+                    <li class="active glyphicon glyphicon-tags">
+                        <a href="/send_vip/">
+                            VIP赠送
+                        </a>
+                    </li>
+                    <br>
+                    <li class="glyphicon glyphicon-phone"><a href="/app/lazy_reg">
+                        手机号注册
+                        </a>
+                    </li>
+                    <br>
+                    <li class="active glyphicon glyphicon-lock">
+                        <a href="/vip_expire/">
+                            VIP过期
+                        </a>
+                    </li>
+                    <br>
+                    <li class="active glyphicon glyphicon-yen">
+                        <a href="/charge_account/">
+                            懒人币充值
+                        </a>
+                    </li>
+                    <br>
+                    <li class="active glyphicon glyphicon-yen">
+                        <a href="/app/unbundle_phone_num">
+                            解绑手机号
+                        </a>
+                    </li>
+                    <br>
+                    <li class="active glyphicon glyphicon-pencil">
+                    <a href="/app/folder_add_books">听单添加100本书籍</a>
+                    </li>
+                </ul>
+            </li>
+            <hr style="border: 0.5px solid lightgray ;margin: 0px">
+            <li role="presentation" class="active">
+                <!-- 选项控制data-target对应的显隐 -->
+                <a href="#" data-toggle="collapse" data-target="#list2"><strong>测试执行</strong></a>
+                <!-- 隐藏的详细菜单 -->
+                <ul id="list2" class="collapse">
+{#                  {% if request.session.role == '1' %}#}
+                    <li class="active glyphicon glyphicon-book">
+                             <a href="/run_test/">
+                            自动化用例执行</a>
+                    </li>
+                    <br>
+{#                    {% endif %}#}
+                    <li class="active glyphicon glyphicon-tags">
+                        <a href="/test_report_list10/">
+                            自动化测试统计
+                        </a>
+                    </li>
+                    <br>
+{#                    {% if request.session.role == '1' %}#}
+                    <li class="active glyphicon glyphicon-blackboard">
+                        <a href="/send_email/">
+                            邮件通知
+                        </a>
+                    </li>
+{#                     {% endif %}#}
+                    <br>
+                    <li class="active glyphicon glyphicon-cloud">
+                        <a href="/mail_config_manual/">
+                            邮件收件人配置
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <hr style="border: 0.5px solid lightgray ;margin: 0px">
+            <li role="presentation" class="active">
+                <a href="#" data-toggle="collapse" data-target="#list3"><strong>测试用例</strong></a>
+                <ul id="list3" class="collapse">
+                <li class="glyphicon glyphicon-pencil">
+                    <a href="/add_cases/">
+                    添加用例
+                    </a>
+                </li>
+                    <br>
+                        <li class="glyphicon glyphicon-th-large"><a href="/cases_pages/{{ 1 }}">
+                            用例集
+                        </a>
+                        </li>
+                </ul>
+                 </li>
+            <hr style="border: 0.5px solid lightgray ;margin: 0px">
+            <li role="presentation" class="active">
+                <a href="#" data-toggle="collapse" data-target="#list4"><strong>测试工具</strong></a>
+                <ul id="list4" class="collapse">
+                <li class="active glyphicon glyphicon-tags">
+                    <a href="/api_test/">
+                        懒人接口调试
+                    </a>
+                </li>
+                    <br>
+                <li class="glyphicon glyphicon-user"><a href="/get_ips/">
+                    用户ip
+                    </a>
+                </li>
+                    <br>
+                 <li class="glyphicon glyphicon-apple"><a href="/#/">
+                    加解密
+                    </a>
+                </li>
+                    <br>
+                </ul>
+                 </li>
+            <hr style="border: 0.5px solid lightgray ;margin: 0px">
+             <li role="presentation" class="active"><a href="#" data-toggle="collapse" data-target="#list5"><strong>友情链接</strong></a>
+                <ul id="list5" class="collapse ">
+                <li class="active glyphicon glyphicon-book">
+                    <a href="https://apidoc.lrts.me/">
+                        懒人听书API接口文档
+                    </a>
+                </li><br>
+                <li class="glyphicon glyphicon-user"><a href="http://confluence.lrts.me/pages/#all-updates">
+                    Xconfluence
+                    </a>
+                </li><br>
+                 <li class="glyphicon glyphicon-plane"><a href="https://www.jianshu.com/p/04207f3f2129">
+                    Django教程
+                    </a>
+                </li>
+                </ul>
+                 </li>
+            <hr style="border: 0.5px solid lightgray ;margin: 0px">
+
+            <li role="presentation" class="active"><a href="#" data-toggle="collapse" data-target="#list6"><strong>配置信息</strong></a>
+                <ul id="list6" class="collapse ">
+                <li class="active glyphicon glyphicon-cog" >
+                    <link style="size: B5"><a href="/get_config/"><strong>配置信息</strong></a></link>
+                </li>
+                </ul>
+            </li>
+            <hr style="border: 0.5px solid lightgray ;margin: 0px">
+        </ul>
+        </div>
+        <div class="right-content">
+            <div style="margin:10px;">
+                    <ol class="breadcrumb">
+                    <li>》<a href="#"><strong>常用链接</strong></a></li>
+                    </ol>
+            </div>
+            <div class="fl">
+                <a href="/items_list/1" class="btn-outline-light" style="margin-left: 50px"><strong>营销活动>>>></strong></a>
+                <span>
+                    <button style="margin-left: 20px"><a href="/add_buy_share/" style="color: #3399FF">买一赠一活动生成</a></button>
+                    <button style="margin-left: 20px"><a href="/add_ShareListen_free/" style="color: #3399FF">分享免费听活动生成</a></button>
+                    <button style="margin-left: 20px"><a href="/add_Subtracts_activity/" style="color: #3399FF">满减活动生成</a></button>
+
+                </span>
+                <p></p>
+                <a href="/items_list/2" class="btn-outline-light" style="margin-left: 50px"><strong>分成合作方管理>>>></strong></a>
+                <span>
+                    <button style="margin-left: 20px"><a href="/platform/add_copyright_partner" style="color: #3399FF">添加版权合作方</a></button>
+                    <button style="margin-left: 20px"><a href="/platform/add_channel_partner" style="color: #3399FF">添加渠道合作方</a></button>
+                    <button style="margin-left: 20px"><a href="/platform/add_anchor_partner" style="color: #3399FF">添加主播合作方</a></button>
+                </span>
+                <p></p>
+                <a href="/items_list/3" class="btn-outline-light" style="margin-left: 50px"><strong>开放平台>>>></strong></a>
+                <span>
+                    <button style="margin-left: 20px"><a href="/platform/add_develop_channel" style="color: #3399FF">开发者管理</a></button>
+                </span>
+                <span>
+                    <button style="margin-left: 20px"><a href="/platform/month_day" style="color: #3399FF">当前月份天数</a></button>
+                </span>
+                <p></p>
+                <a href="/items_list/3" class="btn-outline-light" style="margin-left: 50px"><strong>结算>>>></strong></a>
+                <span>
+                    <button style="margin-left: 20px"><a href="/platform/settlement_not_vip" style="color: #3399FF">结算非VIP业务</a></button>
+                </span>
+                <span>
+                    <button style="margin-left: 20px"><a href="/platform/settlement_vip" style="color: #3399FF">结算版权/主播VIP业务</a></button>
+                </span>
+                <span>
+                    <button style="margin-left: 20px"><a href="/platform/settlement_channel_vip" style="color: #3399FF">结算渠道VIP业务</a></button>
+                </span>
+{#                <iframe width="800" scrolling="no" height="600" frameborder="0" allowtransparency="true" style="color: #721c24"></iframe>#}
+{#                <iframe ID='ifm1' width='500' height='330' align='center' marginwidth='0' marginheight='30' hspace='0' vspace='0' FRAMEBORDER='0' scrolling='no' src="/test_report_list10/" style="float: right"></iframe>#}
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+</body>
+</html>

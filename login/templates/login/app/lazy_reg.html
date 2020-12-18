@@ -1,0 +1,44 @@
+{% extends 'login/base.html' %}
+
+
+{% block content %}
+    <head>
+            <title>懒人app注册账号</title>
+        </head>
+    <div class="container">
+            <div class="col-md-8" style="margin:20px auto;">
+                <form class="form-phone_register" action="/app/lazy_reg" method="post">
+                  {% csrf_token %}
+{#                {{ request.session.user_name }}#}
+                    <h3 class="text-center">app注册用户</h3>
+                    <br><br>
+                    <p style="background: #96B97D;color:white">tips：懒人app手机号注册</p>
+                    <div class="form-group">
+                      {{ host_form.host.label_tag}}
+                      {{ host_form.host}}
+                    </div>
+                    {% if folder_form.captcha.errors %}
+                        <div class="alert alert-warning">{{ host_form.captcha.errors}}</div>
+                    {% elif message %}
+                        <div class="alert alert-warning">{{ message|linebreaksbr }}</div>
+                    {% endif %}
+                  <div>
+                      <a href="/" class="text-success "><ins>返回首页</ins></a>
+                      <button name="button-phone_register" type="submit" class="btn btn-primary float-right">注册</button>
+                  </div>
+                </form>
+            </div>
+    </div> <!-- /container -->
+{#<div class="div-center" style="margin-left: 50px;margin-top: 40px">#}
+{#    <h3 class="text-center">用户注册结果</h3>#}
+{#<p>#}
+{#    新增用户成功！<br>#}
+{#    <a>手机号：{{phoneNum}}，</a><br>#}
+{#    <a>密码：123456，</a><br>#}
+{#    <a>昵称：{{ nickname }}，</a><br>#}
+{#    <a>userId：{{ userId }}</a>#}
+{#    <br> <br>#}
+{#    <span style="font-size:20px;"><a href="/">返回</a></span>#}
+{#</p>#}
+{#</div>#}
+{% endblock %}

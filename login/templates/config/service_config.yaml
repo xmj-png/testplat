@@ -1,0 +1,13 @@
+keys:
+    loginKey: false
+    robotKeyEarth: 15cdf3d2-80fd-4c1c-b648-33f500ab73ef,18f5c609-5330-4c57-9434-25ccb2af19b8
+    robotKeyMoon: 15cdf3d2-80fd-4c1c-b648-33f500ab73ef,8e50826a-66e7-47c4-b248-f84b09cc4d54,05480d8a-68c3-4408-befc-c1f8ff44b32a
+    robotKeyMars: 15cdf3d2-80fd-4c1c-b648-33f500ab73ef
+    robotKeyEarth_Platform_Billing: 15cdf3d2-80fd-4c1c-b648-33f500ab73ef
+    robotKeyMoon_Platform_Billing: 15cdf3d2-80fd-4c1c-b648-33f500ab73ef,d9a26741-4544-457f-a59f-96156c8cef7d
+    robotKeyMars_Platform_Billing: 15cdf3d2-80fd-4c1c-b648-33f500ab73ef
+    robotKeyBuild_Platform_Billing: 15cdf3d2-80fd-4c1c-b648-33f500ab73ef
+    robotKeyEarth_Platform_Audio: 15cdf3d2-80fd-4c1c-b648-33f500ab73ef
+    robotKeyMoon_Platform_Audio: 15cdf3d2-80fd-4c1c-b648-33f500ab73ef
+    robotKeyMars_Platform_Audio: 15cdf3d2-80fd-4c1c-b648-33f500ab73ef,7c183ffe-6a41-4d1b-9156-3c2562aecc6c,e49e89d2-1f0c-48fb-a4d6-f793724e5102
+    robotKeyBuild_Platform_Audio: 15cdf3d2-80fd-4c1c-b648-33f500ab73ef

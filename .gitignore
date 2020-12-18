@@ -1,0 +1,5 @@
+login/templates/login/reports/*
+.idea/
+__pycache__/
+venv/
+logs/

@@ -1,0 +1,144 @@
+{% extends 'login/home.html' %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>用例集</title>
+    <script type="text/javascript" src="http://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/js/bootstrap-select.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/css/bootstrap-select.css">
+    <script type="text/javascript">
+        $(window).on('load', function () {
+
+            $('.selectpicker').selectpicker({
+                'selectedText': 'cat'
+            });
+
+        });
+    </script>
+    <style type="text/css">
+        th{
+        white-space: nowrap;
+        }
+        td{
+        white-space: nowrap;overflow:hidden;text-overflow: ellipsis;-webkit-text-overflow:ellipsis;
+        }
+        li{
+            font-size: larger;
+            font-weight: bold;
+            margin: 10px;
+        }
+    </style>
+
+    <div style="margin-left: 10px"><a href="/"  style="font-weight: bold;float: left" >返回首页</a><br></div>
+</head>
+<body>
+
+
+<div class="container-fluid">
+  <div class="row">
+
+        <div class ="m-auto"><h1>测试用例</h1></div>
+
+        <div class="col-md-12">
+            <div style="margin-right: 0px">
+                <form class="form-upload_file" action="/upload_cases/" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div>
+                        <label for="file">选择用例文件(xlsx,csv,xls):</label>
+                        <input type="file" id="excel_file" name="files_excel">
+                    </div>
+                    <p></p>
+                    <div>
+                        <button class="button btn-info">批量导入</button>
+                         <a href="/add_cases/" class="btn btn-success" style="margin-left: 40px">添加用例</a>
+                    </div>
+                </form>
+             </div>
+
+        <div id="header-search-box" class="col-md-12  text-right" >
+                        <form role="search" method="get" id="searchform" action="/search_case/" >
+                            <SELECT id="caseType"  name="case_type" style="margin-left: -14px">
+                                <OPTION value="all">全部类型</OPTION>
+                                <OPTION value="app">app用例</OPTION>
+                                <OPTION value="admin">admin用例</OPTION>
+                                <OPTION value="platform">平台用例</OPTION>
+                            </SELECT>
+                            {% csrf_token %}
+                            <input type="search" class="search-query" name="query" placeholder="用例中文名/脚本名"  style="margin-left: 14px">
+                            &nbsp; <button type="submit" class="btn btn-primary" style="margin-bottom: 5px"><span class="icon-search">搜索</span></button>
+                        </form>
+       </div>
+    <div>
+    <table class=" table-hover table  table-bordered ">
+             <thead class="thead-light">
+                    <tr>
+                        <th>序号</th>
+                        <th>用例中文名</th>
+                        <th>用例类型</th>
+                        <th>用例步骤</th>
+                        <th>用例脚本名</th>
+                        <th>创建时间</th>
+                        <th>创建者/更新者</th>
+                        <th>功能</th>
+                    </tr>
+                </thead>
+        <tbody>
+        {%for item in page%}
+            <tr>
+                <td>{{forloop.counter|add:strat}}</td>
+                <td>{{item.case_name_ch}}</td>
+                <td>{{item.case_type}}</td>
+                <td id="th-step">{{item.case_steps}}</td>
+                <td>{{item.script_name}}</td>
+                <td>{{item.create_time}}</td>
+                <td>{{item.case_creater}}</td>
+                <td colspan="4">
+                    <a href="/case_edit/?edit_id={{ item.id }}" class="btn btn-success">编辑</a>　　
+                    <a href="/delete_case/?delete_id={{ item.id }} " class="btn btn-danger">删除</a>
+                    <a href="/run_case/?run_id={{ item.id }} " class="btn btn-info">执行</a>
+                    <a href="/test_report_single/?run_id={{ item.id }}" class="text-info">详情</a>
+
+                </td>
+            </tr>
+        {%endfor%}
+    </tbody>
+    </table>
+    </div>
+{#    <nav aria-label="Page navigation m-auto pagination-lg">#}
+		<div class="pagination m-auto"  >
+			<ul class="pagination m-auto">
+			    {% if page.has_previous %}
+				<li class="page-item"><a class="page-link" href="/cases_pages/{{page.previous_page_number}}" aria-label="Previous">
+					<span aria-hidden="true">上一页</span></a></li>
+                {% endif %}
+                {% for num in page.paginator.page_range%}
+            	{%if pindex == page.number%}
+                	<li class="page-item active"><a class="page-link" href="">{{ num }}</a></li>
+                {%else%}
+                    <li class="page-item "><a class="page-link" href="/cases_pages/{{num}}">{{ num }}</a></li>
+                {%endif%}
+                {% endfor %}
+                {% if page.has_next %}
+                 <li class="page-item"><a class="page-link" href="/cases_pages/{{page.next_page_number}}" aria-label="Next">
+                      <span aria-hidden="true">下一页</span></a></li>
+                {% endif %}
+       		</ul>
+
+		</div>
+{#    </nav>#}
+
+     </div>
+</div>
+</div>
+{#<script>#}
+{#  window.onready = function () {#}
+{#    var a = $('#caseType').change(function () {#}
+{#      console.log($('#caseType').val())#}
+{#    })#}
+{#  }#}
+{#</script>#}
+
+</body>
+{% endblock %}
+</html>

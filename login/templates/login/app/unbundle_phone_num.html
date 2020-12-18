@@ -1,0 +1,44 @@
+{% extends 'login/base.html' %}
+
+
+{% block content %}
+        <head>
+            <title>解绑手机号</title>
+        </head>
+        <div class="container">
+            <div class="col-md-8" style="margin:20px auto;">
+                <form class="form-unbundle_phone" action="/app/unbundle_phone_num" method="post">
+
+                  {% csrf_token %}
+{#                {{ request.session.user_name }}#}
+                    <h3 class="text-center">解绑手机号</h3>
+                    <br><br>
+                    <p style="background: #96B97D;color:white">tips：输入用户id和手机号解绑手机号，用户id和手机号必须匹配才能解绑成功！！</p>
+                    <div class="form-group">
+                      {{ unbundle_phone_form.host.label_tag}}
+                      {{ unbundle_phone_form.host}}
+                    </div>
+                    <div class="form-group">
+                      {{ unbundle_phone_form.user_id.label_tag}}
+                      {{ unbundle_phone_form.user_id}}
+                    </div>
+                    <div class="form-group">
+                      {{ unbundle_phone_form.phone_num.label_tag}}
+                      {{ unbundle_phone_form.phone_num}}
+                    </div>
+                    {% if unbundle_phone_form.captcha.errors %}
+                        <div class="alert alert-warning">{{ unbundle_phone_form.captcha.errors}}</div>
+                    {% elif message %}
+                        <div class="alert alert-warning">{{ message }}</div>
+                    {% endif %}
+                  <div>
+                      <a href="/" class="text-success "><ins>返回首页</ins></a>
+                      <button name="button-days" type="submit" class="btn btn-primary float-right">解绑</button>
+                  </div>
+                </form>
+            </div>
+    </div> <!-- /container -->
+{% endblock %}
+
+
+

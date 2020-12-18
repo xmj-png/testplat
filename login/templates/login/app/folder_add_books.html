@@ -1,0 +1,44 @@
+{% extends 'login/base.html' %}
+
+
+{% block content %}
+        <head>
+            <title>新建听单并添加100本书籍</title>
+        </head>
+        <div class="container">
+            <div class="col-md-8" style="margin:20px auto;">
+                <form class="form-folder_add_books" action="/app/folder_add_books" method="post">
+
+                  {% csrf_token %}
+{#                {{ request.session.user_name }}#}
+                    <h3 class="text-center">新建听单并添加100本书籍</h3>
+                    <br><br>
+                    <p style="background: #96B97D;color:white">tips：新建听单并往听单里随机添加100本书籍</p>
+                    <div class="form-group">
+                      {{ folder_form.host.label_tag}}
+                      {{ folder_form.host}}
+                    </div>
+                    <div class="form-group">
+                      {{ folder_form.username.label_tag}}
+                      {{ folder_form.username}}
+                    </div>
+                    <div class="form-group">
+                      {{ folder_form.password.label_tag}}
+                      {{ folder_form.password}}
+                    </div>
+                    {% if folder_form.captcha.errors %}
+                        <div class="alert alert-warning">{{ folder_form.captcha.errors}}</div>
+                    {% elif message %}
+                        <div class="alert alert-warning">{{ message }}</div>
+                    {% endif %}
+                  <div>
+                      <a href="/" class="text-success "><ins>返回首页</ins></a>
+                      <button name="button-days" type="submit" class="btn btn-primary float-right">创建听单并添加书籍</button>
+                  </div>
+                </form>
+            </div>
+    </div> <!-- /container -->
+{% endblock %}
+
+
+
